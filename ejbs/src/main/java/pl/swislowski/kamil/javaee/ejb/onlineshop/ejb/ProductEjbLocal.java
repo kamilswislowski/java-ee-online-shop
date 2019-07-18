@@ -2,8 +2,10 @@ package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Product;
 
+import javax.ejb.Local;
 import java.util.List;
 
+@Local
 public interface ProductEjbLocal {
     void create(Product product);
 

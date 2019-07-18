@@ -91,10 +91,10 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.2</version>
                 </plugin>
-                <plugin>
-                    <artifactId>maven-ear-plugin</artifactId>
-                    <version>3.0.1</version>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <artifactId>maven-ear-plugin</artifactId>-->
+<!--                    <version>3.0.1</version>-->
+<!--                </plugin>-->
                 <plugin>
                     <artifactId>maven-ejb-plugin</artifactId>
                     <version>3.0.1</version>
