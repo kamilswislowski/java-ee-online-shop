@@ -1,10 +1,13 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Category;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.CategoryService;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,8 +18,8 @@ public class CategoryCacheEjb implements CategoryCacheEjbLocal {
     private static final Logger LOGGER = Logger.getLogger(CategoryCacheEjb.class.getName());
     private List<Category> categories = new ArrayList<>();
 
-//    @Inject
-//    private CategoryService categoryService;
+    @Inject
+    private CategoryService categoryService;
 
     public CategoryCacheEjb() {
     }
@@ -27,7 +30,12 @@ public class CategoryCacheEjb implements CategoryCacheEjbLocal {
         categories.add(new Category(1L, "Tea", null));
         categories.add(new Category(2L, "Coffee", null));
         categories.add(new Category(3L, "Meat", null));
-//        categories = categoryService.categories();
+    }
+
+    @Schedule(minute = "*/1", hour = "*")
+    public void refreshCache(){
+        LOGGER.info("Refreshing cache ...");
+        categories = categoryService.categories();
     }
 
     @Override
