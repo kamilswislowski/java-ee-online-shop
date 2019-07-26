@@ -33,9 +33,10 @@ public class CategoryCacheEjb implements CategoryCacheEjbLocal {
     }
 
     @Schedule(minute = "*/1", hour = "*")
-    public void refreshCache(){
+    public void refreshCache() {
         LOGGER.info("Refreshing cache ...");
         categories = categoryService.categories();
+        LOGGER.info("" + categories);
     }
 
     @Override

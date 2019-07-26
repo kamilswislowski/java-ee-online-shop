@@ -2,8 +2,9 @@ package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao;
 
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Category;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,11 +15,16 @@ import java.util.List;
 @QualifierDefaultCategoryDao
 public class DefaultCategoryDao implements CategoryDao {
 
-    public List<Category> categories() {
+    @Resource(lookup = "jdbc/PostgresDataSource")
+    private DataSource dataSource;
+
+    @Override
+    public List<Category> categories() {//throws ReadCategoryDaoException {
         List<Category> categories = new ArrayList<>();
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Kamil", "Kamil", "Kamil");
+            Connection connection = dataSource.getConnection();
+//            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Kamil", "Kamil", "Kamil");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM CATEGORIES");
             while (resultSet.next()) {
@@ -30,6 +36,7 @@ public class DefaultCategoryDao implements CategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+//            throw new ReadCategoryDaoException("Unable to read categories.", e);
         }
 
         return categories;
