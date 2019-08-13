@@ -41,6 +41,7 @@ public class CategoryCacheEjb implements CategoryCacheEjbLocal {
 
     @Override
     public List<Category> categories() {
+        LOGGER.info("" + categories);
         return categories;
     }
 }

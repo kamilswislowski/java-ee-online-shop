@@ -14,8 +14,8 @@
     <modules>
         <module>projects</module>
         <module>primary-source</module>
-        <module>servlets</module>
         <module>ejbs</module>
+        <module>servlets</module>
         <module>ear</module>
     </modules>
 
