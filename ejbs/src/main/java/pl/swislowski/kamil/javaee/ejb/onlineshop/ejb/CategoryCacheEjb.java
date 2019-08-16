@@ -32,10 +32,11 @@ public class CategoryCacheEjb implements CategoryCacheEjbLocal {
         categories.add(new Category(3L, "Meat", null));
     }
 
-    @Schedule(minute = "*/1", hour = "*")
+    @Schedule(second = "*/10", minute = "*", hour = "*")
     public void refreshCache() {
         LOGGER.info("Refreshing cache ...");
         categories = categoryService.categories();
+        categoryService.read(1L);
         LOGGER.info("" + categories);
     }
 
