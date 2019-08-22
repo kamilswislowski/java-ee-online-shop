@@ -58,4 +58,12 @@ public class DefaultCategoryDao implements CategoryDao {
 
         return categories;
     }
+
+    @Override
+    public CategoryEntity create(CategoryEntity categoryEntity) {
+        LOGGER.info("Creating CategoryEntity ...");
+        entityManager.persist(categoryEntity);
+        LOGGER.info("Created CategoryEntity : " + categoryEntity);
+        return categoryEntity;
+    }
 }

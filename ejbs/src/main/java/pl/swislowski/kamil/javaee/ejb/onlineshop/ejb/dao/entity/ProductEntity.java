@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -24,6 +26,10 @@ public class ProductEntity {
 
     private Integer stock;
 
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private CategoryEntity category;
+
     public ProductEntity() {
     }
 
@@ -33,11 +39,22 @@ public class ProductEntity {
         this.stock = stock;
     }
 
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", category=" + category +
                 '}';
     }
 }

@@ -22,4 +22,8 @@ public class CategoryService {
     public List<Category> categories() {
         return categoryDao.categories();
     }
+
+    public CategoryEntity create(CategoryEntity categoryEntity) {
+        return categoryDao.create(categoryEntity);
+    }
 }

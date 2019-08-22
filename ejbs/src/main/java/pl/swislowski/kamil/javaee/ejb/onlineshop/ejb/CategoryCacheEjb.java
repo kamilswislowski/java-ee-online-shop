@@ -27,9 +27,9 @@ public class CategoryCacheEjb implements CategoryCacheEjbLocal {
     @PostConstruct
     public void initialize() {
         LOGGER.info("Initializing...");
-        categories.add(new Category(1L, "Tea", null));
-        categories.add(new Category(2L, "Coffee", null));
-        categories.add(new Category(3L, "Meat", null));
+//        categories.add(new Category(1L, "Tea", null));
+//        categories.add(new Category(2L, "Coffee", null));
+//        categories.add(new Category(3L, "Meat", null));
     }
 
     @Schedule(second = "*/10", minute = "*", hour = "*")

@@ -10,5 +10,7 @@ public interface CategoryDao {
     CategoryEntity read(Long id);
 
     List<Category> categories();
+
+    CategoryEntity create(CategoryEntity categoryEntity);
 //    throws ReadCategoryDaoException;
 }

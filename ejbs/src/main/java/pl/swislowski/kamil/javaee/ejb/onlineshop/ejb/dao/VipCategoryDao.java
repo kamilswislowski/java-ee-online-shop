@@ -16,4 +16,9 @@ public class VipCategoryDao implements CategoryDao {
     public List<Category> categories() {
         return null;
     }
+
+    @Override
+    public CategoryEntity create(CategoryEntity categoryEntity) {
+        return null;
+    }
 }
