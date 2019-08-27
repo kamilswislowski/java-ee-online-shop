@@ -4,11 +4,16 @@ import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.ProductDao;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.entity.ProductEntity;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class ProductService {
 
     @Inject
     private ProductDao productDao;
+
+    public List<ProductEntity> list(){
+        return productDao.list();
+    }
 
     public ProductEntity create(ProductEntity productEntity) {
         return productDao.create(productEntity);

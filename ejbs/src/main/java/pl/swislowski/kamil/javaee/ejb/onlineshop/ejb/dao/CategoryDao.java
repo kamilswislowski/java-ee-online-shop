@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CategoryDao {
 
+    List<CategoryEntity> list();
+
     CategoryEntity read(Long id);
 
     List<Category> categories();

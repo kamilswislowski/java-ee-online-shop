@@ -15,6 +15,10 @@ public class CategoryService {
     @QualifierDefaultCategoryDao
     private CategoryDao categoryDao;
 
+    public List<CategoryEntity> list(){
+        return categoryDao.list();
+    }
+
     public CategoryEntity read(Long id) {
         return categoryDao.read(id);
     }

@@ -8,6 +8,11 @@ import java.util.List;
 //@Named("vipCategoryDao")
 public class VipCategoryDao implements CategoryDao {
     @Override
+    public List<CategoryEntity> list() {
+        return null;
+    }
+
+    @Override
     public CategoryEntity read(Long id) {
         return null;
     }

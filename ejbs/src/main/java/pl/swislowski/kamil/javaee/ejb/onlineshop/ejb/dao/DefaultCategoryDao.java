@@ -6,6 +6,7 @@ import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.entity.CategoryEntity;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,6 +27,15 @@ public class DefaultCategoryDao implements CategoryDao {
 
     @PersistenceContext(unitName = "OnlineShopPU")
     private EntityManager entityManager;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<CategoryEntity> list() {
+        Query namedQuery = entityManager.createNamedQuery("CategoryEntity.getAll");
+        List resultList = namedQuery.getResultList();
+        LOGGER.info("List of categories : " + resultList);
+        return resultList;
+    }
 
     @Override
     public CategoryEntity read(Long id) {
