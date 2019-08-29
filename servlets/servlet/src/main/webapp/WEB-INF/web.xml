@@ -4,6 +4,10 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <welcome-file-list>
+        <welcome-file>products.xhtml</welcome-file>
+    </welcome-file-list>
+
     <context-param>
         <param-name>facelets.SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
@@ -17,5 +21,6 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
+<!--        /faces/* - umożliwia równoległe korzystanie z JSP i JSF-->
     </servlet-mapping>
 </web-app>
