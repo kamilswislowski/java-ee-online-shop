@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 //@RequestScoped
 //@Named
 @ManagedBean(name = "cartJsfBean")
-public class CartJsfBean implements Serializable {
-    private static final Logger LOGGER = Logger.getLogger(CartJsfBean.class.getName());
+public class CartBean implements Serializable {
+    private static final Logger LOGGER = Logger.getLogger(CartBean.class.getName());
 
     @EJB
     private CartEjbRemote cartEjbRemote;
@@ -28,7 +28,7 @@ public class CartJsfBean implements Serializable {
 
     private List<Product> products = new ArrayList<>();
 
-    public CartJsfBean() {
+    public CartBean() {
     }
 
     public String checkout() {

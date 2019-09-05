@@ -15,7 +15,7 @@
 <h:body>
     <f:view>
         <h:form>
-            <h:dataTable value="#{productBean.products}" var="product" border="2" cellspacing="1" cellpadding="1">
+            <h:dataTable value="#{productBean.products}" var="product" border="1" cellspacing="0" cellpadding="0">
                 <h:column>
                     <f:facet name="header">Name</f:facet>
                     #{product.name}
@@ -36,11 +36,11 @@
                     <f:facet name="header">Action</f:facet>
                     <h:commandLink action="#{productBean.delete(product)}" value="Usuń"/>
                     &nbsp;
-                    <h:commandLink action="#{productBean.update(product.id)}" value="Edycja"/>
+                    <h:commandLink action="#{productBean.editProductView(product.id)}" value="Edycja"/>
                 </h:column>
             </h:dataTable>
 <!--            <h:link outcome="addProduct" value="Dodaj"/>-->
-            <h:commandLink action="#{productBean.addProduct()}" value="Edycja"/>
+            <h:commandLink action="#{productBean.addProductView()}" value="Dodaj"/>
         </h:form>
 
     </f:view>

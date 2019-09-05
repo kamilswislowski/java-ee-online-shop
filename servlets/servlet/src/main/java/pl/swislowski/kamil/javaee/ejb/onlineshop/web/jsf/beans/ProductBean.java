@@ -8,16 +8,20 @@ import javax.faces.bean.SessionScoped;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @ManagedBean//(name = "productBean")
 @SessionScoped
 public class ProductBean {
     private static final Logger LOGGER = Logger.getLogger(ProductBean.class.getName());
+    private static final String MANAGE_PRODUCT_VIEW_NAME = "manageProduct";
 
     private Product product = new Product();
 
     private List<Product> products = new ArrayList<>();
+
+    private boolean edit;
 
     @PostConstruct
     public void initialize(){
@@ -26,22 +30,46 @@ public class ProductBean {
         LOGGER.info("Initializing ...");
     }
 
-    public String addProduct(){
+    public String addProductView(){
         LOGGER.info("Cleaning product ...");
         product = new Product();
+        this.edit = false;
         LOGGER.info("Product : " + product);
-        return "addProduct";
+        return MANAGE_PRODUCT_VIEW_NAME;
     }
 
-    public String create() {
+    public String addProduct() {
         LOGGER.info("Saving product : " + product);
         products.add(product);
         return "products";
     }
 
-    public String update(Long id) {
+    public String editProductView(Long id) {
         LOGGER.info("Updating product ... with id: " + id);
-        return "updateProduct";
+        for (Product product : products) {
+            Long productId = product.getId();
+            if (Objects.equals(productId, id)) {
+                LOGGER.info("Found product : " + product);
+                this.product = product;
+            }
+        }
+        this.edit = true;
+        return MANAGE_PRODUCT_VIEW_NAME;
+    }
+
+    public String editProduct() {
+        LOGGER.info("Editing product : " + product);
+        for (Product product : products) {
+            Long productId = product.getId();
+            if (Objects.equals(productId, this.product.getId())) {
+                LOGGER.info("Found product : " + product);
+//                this.product = product;
+                product.setName(this.product.getName());
+                product.setStock(this.product.getStock());
+            }
+        }
+//        products.add(product);
+        return "products";
     }
 
     public void delete(Product product) {
@@ -63,5 +91,13 @@ public class ProductBean {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public boolean getEdit() {
+        return edit;
+    }
+
+    public void setEdit(boolean edit) {
+        this.edit = edit;
     }
 }
