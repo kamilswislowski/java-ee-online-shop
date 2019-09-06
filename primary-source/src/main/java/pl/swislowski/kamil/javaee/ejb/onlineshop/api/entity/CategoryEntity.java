@@ -1,4 +1,4 @@
-package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.entity;
+package pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

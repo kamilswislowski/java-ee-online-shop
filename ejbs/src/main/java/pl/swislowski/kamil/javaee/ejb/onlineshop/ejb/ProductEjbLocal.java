@@ -1,19 +1,19 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 
-import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Product;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
 
 import javax.ejb.Local;
 import java.util.List;
 
 @Local
 public interface ProductEjbLocal {
-    void create(Product product);
+    void create(ProductModel productModel);
 
-    Product read(Long id);
+    ProductModel read(Long id);
 
-    Product update(Product product);
+    ProductModel update(ProductModel productModel);
 
     void delete(Long id);
 
-    List<Product> list();
+    List<ProductModel> list();
 }

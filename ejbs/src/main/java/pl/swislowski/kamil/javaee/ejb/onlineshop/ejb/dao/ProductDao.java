@@ -1,6 +1,6 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao;
 
-import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.entity.ProductEntity;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.ProductEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ public class ProductDao {
     private EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
-    public List<ProductEntity> list(){
+    public List<ProductEntity> list() {
 //        Query query = entityManager.createQuery("SELECT e FROM ProductEntity e");
 //        List resultList = query.getResultList();
         Query namedQuery = entityManager.createNamedQuery("ProductEntity.getAll");

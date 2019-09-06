@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="ejb" url="file://$PROJECT_DIR$/ejbs" />
+    <file type="ejb" url="file://$PROJECT_DIR$/primary-source" />
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/ear" />
     <file type="web" url="file://$PROJECT_DIR$/servlets/servlet" />
   </component>

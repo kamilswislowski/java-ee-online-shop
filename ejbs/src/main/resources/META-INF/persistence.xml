@@ -5,6 +5,10 @@
     <persistence-unit name="OnlineShopPU" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>jdbc/PostgresDataSource</jta-data-source>
+
+        <class>pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.ProductEntity</class>
+        <class>pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.CategoryEntity</class>
+
         <properties>
 <!--            <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />-->
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />

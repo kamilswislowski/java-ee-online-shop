@@ -2,8 +2,8 @@ package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Category;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Order;
-import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.entity.CategoryEntity;
-import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.dao.entity.ProductEntity;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.CategoryEntity;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.ProductEntity;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.CategoryService;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.ProductService;
 
@@ -41,7 +41,7 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
 
     public void add() { // Wywoływane z klienta (oddzielny projekt w intellij)
 //        // #### Testowanie relacji @OneToMany oraz @OneToOne
-//        LOGGER.info("Adding product ...");
+//        LOGGER.info("Adding productModel ...");
 //        CategoryEntity categoryEntity = categoryService.read(2L);
 ////        CategoryEntity categoryEntity = categoryService.create(new CategoryEntity("Tekstylia"));
 //        LOGGER.info("Created CategoryEntity : " + categoryEntity);
@@ -63,7 +63,7 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
         LOGGER.info("Created CategoryEntity : " + categoryDom);
 
         ProductEntity productCzarneZaslony = new ProductEntity("Czarne zaslony", BigDecimal.valueOf(9.99), 30);
-        productService.create(productCzarneZaslony);
+//        productService.create(productCzarneZaslony);
         Set<CategoryEntity> categories = new HashSet<>();
         categories.add(categoryTekstylia);
         categories.add(categoryZaslony);

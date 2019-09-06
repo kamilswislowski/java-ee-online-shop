@@ -1,7 +1,7 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.web.jsf.beans;
 
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Order;
-import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Product;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.CartEjbRemote;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.CategoryCacheEjbLocal;
 
@@ -26,7 +26,7 @@ public class CartBean implements Serializable {
 
     private String name;
 
-    private List<Product> products = new ArrayList<>();
+    private List<ProductModel> productModels = new ArrayList<>();
 
     public CartBean() {
     }
@@ -48,12 +48,12 @@ public class CartBean implements Serializable {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<ProductModel> getProductModels() {
+        return productModels;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProductModels(List<ProductModel> productModels) {
+        this.productModels = productModels;
     }
 }
 

@@ -18,25 +18,25 @@
             <h1>Add Product</h1>
         </c:if>
         <c:if test="${productBean.edit}">
-            <h1>Edit product</h1>
+            <h1>Edit productModel</h1>
         </c:if>
         <h:form>
             <div>
                 <div>
                     <h:outputLabel for="name">Name:&nbsp;</h:outputLabel>
-                    <h:inputText value="${productBean.product.name}" id="name"/>
+                    <h:inputText value="${productBean.productModel.name}" id="name"/>
                 </div>
                 <div>
                     <h:outputLabel for="price">Price:&nbsp;</h:outputLabel>
-                    <h:inputText value="${productBean.product.price}" id="price"/>
+                    <h:inputText value="${productBean.productModel.price}" id="price"/>
                 </div>
                 <div>
                     <h:outputLabel for="stock">Stock:&nbsp;</h:outputLabel>
-                    <h:inputText value="${productBean.product.stock}" id="stock"/>
+                    <h:inputText value="${productBean.productModel.stock}" id="stock"/>
                 </div>
                 <!--                <div>-->
                 <!--                    <h:outputLabel for="category">Category:&nbsp;</h:outputLabel>-->
-                <!--                    <h:inputText value="${productBean.product.category}" id="category"/>-->
+                <!--                    <h:inputText value="${productBean.productModel.category}" id="category"/>-->
                 <!--                </div>-->
                 <div>
                     <c:if test="${not productBean.edit}">

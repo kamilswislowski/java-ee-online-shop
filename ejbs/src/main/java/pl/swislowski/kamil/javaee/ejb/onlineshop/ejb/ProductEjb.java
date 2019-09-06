@@ -1,9 +1,8 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 
-import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Product;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.ProductService;
 
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
@@ -19,28 +18,20 @@ public class ProductEjb implements ProductEjbLocal {
 
     private AtomicLong productCounter = new AtomicLong(1);
 
-    @Schedule(second = "*/10", minute = "*", hour = "*")
-    public void addProduct(){
-//        productService.create(new ProductEntity("Materac", BigDecimal.valueOf(99.99),10));
-    }
-
-    @Schedule(second = "*/30", minute = "*", hour = "*")
-    public void removeProduct() {
-//        productService.delete(productCounter.getAndIncrement());
+    @Override
+    public void create(ProductModel productModel) {
+        LOGGER.info("Creating productModel : " + productModel);
+        ProductModel productModelFromService = productService.create(productModel);
+        LOGGER.info("Created productModel : " + productModelFromService);
     }
 
     @Override
-    public void create(Product product) {
-        LOGGER.info("Creating product " + product);
-    }
-
-    @Override
-    public Product read(Long id) {
+    public ProductModel read(Long id) {
         return null;
     }
 
     @Override
-    public Product update(Product product) {
+    public ProductModel update(ProductModel productModel) {
         return null;
     }
 
@@ -50,7 +41,7 @@ public class ProductEjb implements ProductEjbLocal {
     }
 
     @Override
-    public List<Product> list() {
+    public List<ProductModel> list() {
         return null;
     }
 }
