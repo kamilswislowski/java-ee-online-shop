@@ -9,16 +9,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
-    <title>Lista produktów</title>
+    <title>Online Shop</title>
 </h:head>
 
 <h:body>
     <f:view>
+        <h1>WELCOME TO ONLINE SHOP</h1>
         <div>
-            <h:link outcome="shop" value="Powrót do listy produktów"/>
+            <h:link outcome="cart" value="Edytuj koszyk"/>
+        </div>
+        <div>
+            <h:link outcome="products" value="Zarządzaj produktami"/>
         </div>
         <h:form>
-            <h:dataTable value="#{productBean.products()}" var="productModel" border="1" cellspacing="0" cellpadding="0">
+            <h:dataTable value="#{productBean.products()}" var="productModel" border="1" cellspacing="0"
+                         cellpadding="0">
                 <h:column>
                     <f:facet name="header">Name</f:facet>
                     #{productModel.name}
@@ -37,13 +42,13 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
-                    <h:commandLink action="#{productBean.delete(productModel.id)}" value="Usuń"/>
+                    <!--                    <h:commandLink action="#{productBean.delete(productModel)}" value="Usuń"/>-->
                     &nbsp;
-                    <h:commandLink action="#{productBean.editProductView(productModel.id)}" value="Edycja"/>
+                    <h:commandLink action="#{cartBean.addProductToCart(productModel.id)}" value="Dodaj do koszyka"/>
                 </h:column>
             </h:dataTable>
-<!--            <h:link outcome="addProduct" value="Dodaj"/>-->
-            <h:commandLink action="#{productBean.addProductView()}" value="Dodaj"/>
+            <!--            <h:link outcome="addProduct" value="Dodaj"/>-->
+            <!--            <h:commandLink action="#{productBean.addProductView()}" value="Dodaj"/>-->
         </h:form>
 
     </f:view>

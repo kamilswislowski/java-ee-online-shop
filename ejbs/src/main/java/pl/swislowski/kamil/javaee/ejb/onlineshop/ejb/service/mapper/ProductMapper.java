@@ -5,6 +5,8 @@ import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.ProductEntity;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
 
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 public class ProductMapper {
@@ -20,5 +22,12 @@ public class ProductMapper {
         return modelMapper.map(productEntity, ProductModel.class);
     }
 
-
+    public List<ProductModel> fromEntityList(List<ProductEntity> productEntities) {
+        List<ProductModel> productModels = new ArrayList<>();
+        for (ProductEntity productEntity : productEntities) {
+            ProductModel productModel = fromEntity(productEntity);
+            productModels.add(productModel);
+        }
+        return productModels;
+    }
 }

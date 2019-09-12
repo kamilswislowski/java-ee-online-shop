@@ -27,21 +27,21 @@ public class ProductEjb implements ProductEjbLocal {
 
     @Override
     public ProductModel read(Long id) {
-        return null;
+        return productService.read(id);
     }
 
     @Override
     public ProductModel update(ProductModel productModel) {
-        return null;
+        return productService.update(productModel);
     }
 
     @Override
     public void delete(Long id) {
-
+        productService.delete(id);
     }
 
     @Override
     public List<ProductModel> list() {
-        return null;
+        return productService.list();
     }
 }

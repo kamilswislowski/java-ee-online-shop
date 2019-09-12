@@ -16,14 +16,24 @@ public class ProductService {
     @Inject
     private ProductMapper productMapper;
 
-    public List<ProductEntity> list() {
-        return productDao.list();
+    public List<ProductModel> list() {
+        return productMapper.fromEntityList(productDao.list());
     }
 
     public ProductModel create(ProductModel productModel) {
         ProductEntity productEntity = productMapper.toEntity(productModel);
         ProductEntity productEntityFromDao = productDao.create(productEntity);
         return productMapper.fromEntity(productEntityFromDao);
+    }
+
+    public ProductModel read(Long id) {
+        ProductEntity productEntity = productDao.read(id);
+        return productMapper.fromEntity(productEntity);
+    }
+
+    public ProductModel update(ProductModel productModel) {
+        ProductEntity productEntity = productMapper.toEntity(productModel);
+        return productMapper.fromEntity(productDao.update(productEntity));
     }
 
     public void delete(Long id) {

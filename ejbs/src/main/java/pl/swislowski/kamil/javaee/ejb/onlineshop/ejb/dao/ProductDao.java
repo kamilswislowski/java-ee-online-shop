@@ -32,8 +32,16 @@ public class ProductDao {
         return productEntity;
     }
 
+    public ProductEntity read(Long id){
+        return entityManager.find(ProductEntity.class, id);
+    }
+
     public void delete(Long id) {
         ProductEntity entity = entityManager.find(ProductEntity.class, id);
         entityManager.remove(entity);
+    }
+
+    public ProductEntity update(ProductEntity productEntity) {
+        return entityManager.merge(productEntity);
     }
 }
