@@ -17,7 +17,8 @@
         <h:link outcome="shop" value="Powrót do listy produktów"/>
 
         <h:form>
-            <h:dataTable value="#{cartBean.productModels}" var="productModel" border="1" cellspacing="0" cellpadding="0">
+            <h:dataTable value="#{cartBean.productModels}" var="productModel" border="1" cellspacing="0"
+                         cellpadding="0">
                 <h:column>
                     <f:facet name="header">Name</f:facet>
                     #{productModel.name}
@@ -38,13 +39,13 @@
                     <f:facet name="header">Action</f:facet>
                     <h:commandLink action="#{cartBean.delete(productModel)}" value="Usuń"/>
                     &nbsp;
-<!--                    <h:commandLink action="#{productBean.editProductView(productModel.id)}" value="Edycja"/>-->
+                    <!--                    <h:commandLink action="#{productBean.editProductView(productModel.id)}" value="Edycja"/>-->
                 </h:column>
             </h:dataTable>
-<!--            <h:link outcome="addProduct" value="Dodaj"/>-->
-<!--            <h:commandLink action="#{productBean.addProductView()}" value="Dodaj"/>-->
+            <!--            <h:link outcome="addProduct" value="Dodaj"/>-->
+            <!--            <h:commandLink action="#{productBean.addProductView()}" value="Dodaj"/>-->
+            <h:commandLink action="#{cartBean.checkout()}" value="Checkout"/>
         </h:form>
-
     </f:view>
 </h:body>
 

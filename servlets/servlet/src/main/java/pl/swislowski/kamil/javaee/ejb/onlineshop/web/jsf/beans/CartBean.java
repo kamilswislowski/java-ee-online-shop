@@ -1,6 +1,5 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.web.jsf.beans;
 
-import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Order;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.CartEjbRemote;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.CategoryCacheEjbLocal;
@@ -57,7 +56,8 @@ public class CartBean implements Serializable {
 
     public String checkout() {
         LOGGER.info("Checking out...");
-        cartEjbRemote.checkout(new Order(new ArrayList<>()));
+//        cartEjbRemote.checkout(new Order(new ArrayList<>()));
+        cartEjbRemote.checkout();
         categoryCacheEjbLocal.categories();
 
 //        return "hello";

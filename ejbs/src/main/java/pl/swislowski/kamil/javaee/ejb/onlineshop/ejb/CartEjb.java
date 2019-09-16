@@ -1,15 +1,21 @@
 package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 
-import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Category;
-import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Order;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.CategoryEntity;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.ProductEntity;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Category;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.mdb.JmsConstants;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.CategoryService;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.ProductService;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.jms.JMSContext;
+import javax.jms.JMSProducer;
+import javax.jms.TextMessage;
+import javax.jms.Topic;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +27,12 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
     private static final Logger LOGGER = Logger.getLogger(CartEjb.class.getName());
 
     @Inject
+    private JMSContext jmsContext;
+
+    @Resource(lookup = JmsConstants.CART_MDB_TOPIC)
+    private Topic cartTopic;
+
+    @Inject
     private CategoryCacheEjbLocal categoryCacheEjbLocal;
 
     @Inject
@@ -28,6 +40,8 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
 
     @Inject
     private ProductService productService;
+
+    private List<ProductModel> productModels;
 
     public CartEjb() {
     }
@@ -37,6 +51,8 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
         LOGGER.info("Initializing...");
         List<Category> categories = categoryCacheEjbLocal.categories();
         LOGGER.info("Kategorie : " + categories);
+        LOGGER.info("#### JMSContext : " + jmsContext);
+//        LOGGER.info("$$$$ Queue : " + checkoutQueue);
     }
 
     public void add() { // Wywoływane z klienta (oddzielny projekt w intellij)
@@ -71,9 +87,20 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
         productCzarneZaslony.setCategories(categories);
     }
 
-    public void checkout(Order order) {
-        LOGGER.info("Checking out order " + order);
+//    public void checkout(Order order) {
+//        LOGGER.info("Checking out order " + order);
+//        productService.list();
+//        categoryService.list();
+//    }
+
+    public void checkout() {
+        LOGGER.info("Checking out !!!");
         productService.list();
         categoryService.list();
+
+        LOGGER.info("Checking out!");
+        TextMessage textMessage = jmsContext.createTextMessage("MESSAGE ####################################################################");
+        JMSProducer producer = jmsContext.createProducer();
+        producer.send(cartTopic, textMessage);
     }
 }
