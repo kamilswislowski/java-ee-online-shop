@@ -14,11 +14,14 @@ import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.jms.JMSContext;
 import javax.jms.JMSProducer;
+import javax.jms.ObjectMessage;
+import javax.jms.Queue;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -32,6 +35,9 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
     @Resource(lookup = JmsConstants.CART_MDB_TOPIC)
     private Topic cartTopic;
 
+    @Resource(lookup = JmsConstants.CART_MDB_QUEUE)
+    private Queue cartQueue;
+
     @Inject
     private CategoryCacheEjbLocal categoryCacheEjbLocal;
 
@@ -42,6 +48,8 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
     private ProductService productService;
 
     private List<ProductModel> productModels;
+
+    private Random random = new Random();
 
     public CartEjb() {
     }
@@ -56,20 +64,6 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
     }
 
     public void add() { // Wywoływane z klienta (oddzielny projekt w intellij)
-//        // #### Testowanie relacji @OneToMany oraz @OneToOne
-//        LOGGER.info("Adding productModel ...");
-//        CategoryEntity categoryEntity = categoryService.read(2L);
-////        CategoryEntity categoryEntity = categoryService.create(new CategoryEntity("Tekstylia"));
-//        LOGGER.info("Created CategoryEntity : " + categoryEntity);
-////        LOGGER.info("All Products for CategoryEntity : " + categoryEntity + " = " + categoryEntity.getProducts());
-//
-//        ProductEntity productEntity = new ProductEntity("Banany", BigDecimal.valueOf(9.99), 30);
-////        productEntity.setCategory(categoryEntity);
-////        productEntity.setCategory(new CategoryEntity("Owoce"));
-//        productService.create(productEntity);
-//        LOGGER.info("Added ProductEntity : " + productEntity);
-
-        // #### Testowanie relacji @ManyToMany
 
         CategoryEntity categoryTekstylia = categoryService.create(new CategoryEntity("Tekstylia"));
         LOGGER.info("Created CategoryEntity : " + categoryTekstylia);
@@ -87,13 +81,7 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
         productCzarneZaslony.setCategories(categories);
     }
 
-//    public void checkout(Order order) {
-//        LOGGER.info("Checking out order " + order);
-//        productService.list();
-//        categoryService.list();
-//    }
-
-    public void checkout() {
+    public void checkout(ProductModel productModel) {
         LOGGER.info("Checking out !!!");
         productService.list();
         categoryService.list();
@@ -102,5 +90,23 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
         TextMessage textMessage = jmsContext.createTextMessage("MESSAGE ####################################################################");
         JMSProducer producer = jmsContext.createProducer();
         producer.send(cartTopic, textMessage);
+
+        TextMessage queueTextMessage = jmsContext.createTextMessage("QueueTextMessage #################### :" + random.nextInt());
+        producer.send(cartQueue, queueTextMessage);
+
+        ObjectMessage objectMessage = jmsContext.createObjectMessage(productModel);
+        producer.send(cartTopic, objectMessage);
+    }
+
+    @Override
+    public void readQueue(){
+        //NOTE: Ostrożnie z samodzielnym odbieraniem wiadomości w sposób synchroniczny.
+//        JMSConsumer consumer = jmsContext.createConsumer(cartQueue);
+//        TextMessage receive = (TextMessage)consumer.receive();
+//        try {
+//            LOGGER.info("Received message from Queue : " + receive.getText());
+//        } catch (JMSException e) {
+//            e.printStackTrace();
+//        }
     }
 }

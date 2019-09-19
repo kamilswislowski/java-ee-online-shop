@@ -30,8 +30,10 @@ public class CartBean implements Serializable {
     @EJB
     private ProductEjbLocal productEjbLocal;
 
-    private String name;
-
+    //TODO: Zamienić listę modeli na ProductItemy.
+    //TODO: Stworzyć CartService w którym umieścić logikę updateowania stacka dla produktów.
+    //TODO: W CartBean wywołać metody z CartService.
+    //TODO: Wychodzimy z założenia, że metoda checkOut modyfikuje ilość dostępnych produktów.
     private List<ProductModel> productModels = new ArrayList<>();
 
     public CartBean() {
@@ -57,56 +59,11 @@ public class CartBean implements Serializable {
     public String checkout() {
         LOGGER.info("Checking out...");
 //        cartEjbRemote.checkout(new Order(new ArrayList<>()));
-        cartEjbRemote.checkout();
+        cartEjbRemote.checkout(productModels.get(0));
         categoryCacheEjbLocal.categories();
 
 //        return "hello";
         return null;
-    }
-
-
-//    public String addProductView(){
-//        LOGGER.info("Cleaning productModel ...");
-//        productModel = new ProductModel();
-//        this.edit = false;
-//        LOGGER.info("ProductModel : " + productModel);
-//        return MANAGE_PRODUCT_VIEW_NAME;
-//    }
-
-//    public String editProductView(Long id) {
-//        LOGGER.info("Updating productModel ... with id: " + id);
-//        for (ProductModel productModel : productModels) {
-//            Long productId = productModel.getId();
-//            if (Objects.equals(productId, id)) {
-//                LOGGER.info("Found productModel : " + productModel);
-//                this.productModel = productModel;
-//            }
-//        }
-//        this.edit = true;
-//        return MANAGE_PRODUCT_VIEW_NAME;
-//    }
-
-//    public String editProduct() {
-//        LOGGER.info("Editing productModel : " + productModel);
-//        for (ProductModel productModel : productModels) {
-//            Long productId = productModel.getId();
-//            if (Objects.equals(productId, this.productModel.getId())) {
-//                LOGGER.info("Found productModel : " + productModel);
-////                this.productModel = productModel;
-//                productModel.setName(this.productModel.getName());
-//                productModel.setStock(this.productModel.getStock());
-//            }
-//        }
-////        productModels.add(productModel);
-//        return "productModels";
-//    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<ProductModel> getProductModels() {
@@ -115,6 +72,10 @@ public class CartBean implements Serializable {
 
     public void setProductModels(List<ProductModel> productModels) {
         this.productModels = productModels;
+    }
+
+    public void readQueue() {
+        cartEjbRemote.readQueue();
     }
 }
 
