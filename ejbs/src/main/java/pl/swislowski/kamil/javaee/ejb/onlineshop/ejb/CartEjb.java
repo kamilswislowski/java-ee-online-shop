@@ -3,8 +3,10 @@ package pl.swislowski.kamil.javaee.ejb.onlineshop.ejb;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.CategoryEntity;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.entity.ProductEntity;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.Category;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductItemModel;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.api.model.ProductModel;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.mdb.JmsConstants;
+import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.CartService;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.CategoryService;
 import pl.swislowski.kamil.javaee.ejb.onlineshop.ejb.service.ProductService;
 
@@ -46,6 +48,9 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
 
     @Inject
     private ProductService productService;
+
+    @Inject
+    private CartService cartService;
 
     private List<ProductModel> productModels;
 
@@ -96,6 +101,11 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
 
         ObjectMessage objectMessage = jmsContext.createObjectMessage(productModel);
         producer.send(cartTopic, objectMessage);
+    }
+
+    @Override
+    public ProductItemModel updateProductItemAmount(Long id, boolean addToCart){
+        return cartService.updateProductItemAmount(id, addToCart);
     }
 
     @Override

@@ -22,29 +22,29 @@
             <h:link outcome="products" value="Zarządzaj produktami"/>
         </div>
         <h:form>
-            <h:dataTable value="#{productBean.products()}" var="productModel" border="1" cellspacing="0"
+            <h:dataTable value="#{productBean.products()}" var="product" border="1" cellspacing="0"
                          cellpadding="0">
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    #{productModel.name}
+                    #{product.name}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Price</f:facet>
-                    #{productModel.price}
+                    #{product.price}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Stock</f:facet>
-                    #{productModel.stock}
+                    #{product.stock}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Category</f:facet>
-                    #{productModel.category}
+                    #{product.category}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
                     <!--                    <h:commandLink action="#{productBean.delete(productModel)}" value="Usuń"/>-->
                     &nbsp;
-                    <h:commandLink action="#{cartBean.addProductToCart(productModel.id)}" value="Dodaj do koszyka"/>
+                    <h:commandLink action="#{cartBean.addProductToCart(product.id)}" value="Dodaj do koszyka"/>
                 </h:column>
             </h:dataTable>
             <!--            <h:link outcome="addProduct" value="Dodaj"/>-->
