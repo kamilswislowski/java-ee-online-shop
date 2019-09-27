@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -53,6 +54,7 @@ public class CartBean {
         LOGGER.info("Checking out...");
 //        cartEjbRemote.checkout(new Order(new ArrayList<>()));
 //        cartEjbRemote.checkout(products.get(0));
+        cartEjbRemote.checkout(new ProductModel("Kluczyki", BigDecimal.valueOf(199.89), 10));
         categoryCacheEjbLocal.categories();
 
 //        return "hello";

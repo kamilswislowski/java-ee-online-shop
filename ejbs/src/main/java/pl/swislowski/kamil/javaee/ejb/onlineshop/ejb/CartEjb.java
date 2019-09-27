@@ -20,11 +20,18 @@ import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Stateful
@@ -39,6 +46,10 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
 
     @Resource(lookup = JmsConstants.CART_MDB_QUEUE)
     private Queue cartQueue;
+
+    //    @Resource(lookup = "EmailSession")
+    @Resource(lookup = "NetWaveEmailSession")
+    private Session emailSession;
 
     @Inject
     private CategoryCacheEjbLocal categoryCacheEjbLocal;
@@ -101,15 +112,69 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
 
         ObjectMessage objectMessage = jmsContext.createObjectMessage(productModel);
         producer.send(cartTopic, objectMessage);
+
+//        SendEmailSMTP.send("First email message.");
+
+        sendEmail("Hello from Java", "Email content", "qamilus@wp.pl");
     }
 
     @Override
-    public ProductItemModel updateProductItemAmount(Long id, boolean addToCart){
+    public ProductItemModel updateProductItemAmount(Long id, boolean addToCart) {
         return cartService.updateProductItemAmount(id, addToCart);
     }
 
+    private void sendEmail(String subject, String msg, String emailTo) {
+        LOGGER.info("Sending email: " + subject);
+        try {
+            // Create the message object
+            javax.mail.Message message = new MimeMessage(emailSession);
+
+            // Adjust the recipients. Here we have only one
+            // recipient. The recipient's address must be
+            // an object of the InternetAddress class.
+            message.setRecipients(javax.mail.Message.RecipientType.TO,
+                    InternetAddress.parse(emailTo, false));
+
+            // Set the message's subject
+            message.setSubject(subject);
+
+            // Insert the message's body
+            message.setText(msg);
+
+            // This is not mandatory, however, it is a good
+            // practice to indicate the software which
+            // constructed the message.
+            message.setHeader("X-Mailer", "My Mailer");
+
+            // Adjust the date of sending the message
+            Date timeStamp = new Date();
+            message.setSentDate(timeStamp);
+
+            // Use the 'send' static method of the Transport
+            // class to send the message
+            Transport.send(message);
+        } catch (MessagingException e) {
+            LOGGER.log(Level.WARNING, "Unable to send an email", e);
+        }
+    }
+
+//    public void sendEmail(String to, String subject, String body) {
+//        MimeMessage message = new MimeMessage(emailSession);
+//        try {
+//            message.setFrom(new InternetAddress(emailSession.getProperty("mail.from")));
+//            InternetAddress[] address = {new InternetAddress(to)};
+//            message.setRecipients(Message.RecipientType.TO, address);
+//            message.setSubject(subject);
+//            message.setSentDate(new Date());
+//            message.setText(body);
+//            Transport.send(message);
+//        } catch (MessagingException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+
     @Override
-    public void readQueue(){
+    public void readQueue() {
         //NOTE: Ostrożnie z samodzielnym odbieraniem wiadomości w sposób synchroniczny.
 //        JMSConsumer consumer = jmsContext.createConsumer(cartQueue);
 //        TextMessage receive = (TextMessage)consumer.receive();

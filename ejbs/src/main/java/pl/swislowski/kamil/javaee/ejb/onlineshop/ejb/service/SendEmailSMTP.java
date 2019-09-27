@@ -10,8 +10,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class SendEmailSMTP {
+
+    private static final Logger LOGGER = Logger.getLogger(SendEmailSMTP.class.getName());
 
     // for example, smtp.mailgun.org
     private static final String SMTP_SERVER = "smtp.poczta.onet.pl";
@@ -26,12 +29,14 @@ public class SendEmailSMTP {
     private static final String EMAIL_TEXT = "Hello Java Mail \n ABC123";
 
     public static void send(String text) {
+        LOGGER.info("Sending email: " + text);
 
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
-        prop.put("mail.smtp.socketFactory.port", "465");
-        prop.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
+//        prop.put("mail.smtp.socketFactory.port", "465");
+//        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
+        prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.port", "465");
 
