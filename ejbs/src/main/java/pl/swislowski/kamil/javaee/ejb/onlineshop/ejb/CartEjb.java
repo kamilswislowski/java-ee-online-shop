@@ -128,6 +128,8 @@ public class CartEjb implements CartEjbRemote { // Wywoływane z klienta (oddzie
         try {
             // Create the message object
             javax.mail.Message message = new MimeMessage(emailSession);
+            InternetAddress[] addresses = InternetAddress.parse("online.shop@jacekservices01.dbox.pl", false);
+            message.setFrom(addresses[0]);
 
             // Adjust the recipients. Here we have only one
             // recipient. The recipient's address must be
