@@ -15,7 +15,6 @@ class ProductItemMapperTest {
         ProductItemMapper productItemMapper = new ProductItemMapper();
 
         ProductItemModel productItemModel = productItemMapper.toProductItem(productModel);
-        System.out.println(productItemModel);
-        Assertions.assertEquals(productModel.getStock(), productItemModel.getAmount());
+        Assertions.assertEquals(productModel.getPrice(), productItemModel.getProduct().getPrice());
     }
 }

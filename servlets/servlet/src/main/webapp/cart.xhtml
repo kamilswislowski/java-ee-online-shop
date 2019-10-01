@@ -19,20 +19,24 @@
             <h:dataTable value="#{cartBean.products}" var="productItem" border="1" cellspacing="0"
                          cellpadding="0">
                 <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    <h:outputLabel value="#{productItem.product.id}"/>
+                </h:column>
+                <h:column>
                     <f:facet name="header">Name</f:facet>
-                    #{productItem.product.name}
+                    <h:outputLabel value="#{productItem.product.name}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Price</f:facet>
-                    #{productItem.product.price}
+                    <h:outputLabel value="#{productItem.product.price}"/>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Stock</f:facet>
-                    #{productItem.product.stock}
+                    <f:facet name="header">Amount</f:facet>
+                    <h:outputLabel value="#{productItem.amount}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Category</f:facet>
-                    #{productItem.product.category}
+                    <h:outputLabel value="#{productItem.product.category}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>

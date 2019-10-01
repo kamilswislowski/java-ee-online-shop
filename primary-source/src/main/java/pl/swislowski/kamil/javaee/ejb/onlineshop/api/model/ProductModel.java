@@ -24,4 +24,8 @@ public class ProductModel implements Serializable {
         this.price = price;
         this.stock = stock;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
