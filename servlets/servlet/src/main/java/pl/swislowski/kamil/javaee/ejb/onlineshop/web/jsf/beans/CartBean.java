@@ -10,11 +10,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 //@RequestScoped
@@ -29,10 +28,7 @@ public class CartBean {
     @EJB
     private CategoryCacheEjbLocal categoryCacheEjbLocal;
 
-    private List<ProductItemModel> products = new ArrayList<>();
-
-    private HashMap<Long, ProductItemModel> productsMap = new HashMap<>();
-
+    private Set<ProductItemModel> products = new HashSet<>();
 
     @PostConstruct
     public void initialize() {
@@ -40,35 +36,24 @@ public class CartBean {
     }
 
     public String addProductToCart(Long id) {
-        LOGGER.info("#############Id : " + id);
         ProductItemModel updateProductItemAmount = cartEjbRemote.updateProductItemAmount(id, true);
-
-        boolean newProductItem = false;
 
         if (products != null && products.size() <= 0) {
             products.add(updateProductItemAmount);
         } else {
-            ListIterator<ProductItemModel> iterator = products.listIterator();
+            Iterator<ProductItemModel> iterator = products.iterator();
             while (iterator.hasNext()) {
                 ProductItemModel productItemModel = iterator.next();
 //            }
 //            for (ProductItemModel productItemModel : products) {                    // Powyżej iteracja po liście przy użyciu iteratora. Warunek hasNext() sprawdza czy jest więcej elementów. Instrukcja next() odpowiedzialna jest za pobranie elementu z listy tak jak uchwyt productItemModel w for each.
                 ProductModel productModel = productItemModel.getProduct();
-//                if (productModel != null) {
                 Long productModelId = productModel.getId();
-                LOGGER.info("#################################ProductItemModel Id : " + productModelId);
                 if (Objects.equals(productModelId, id)) {
                     productItemModel.setAmount(productItemModel.getAmount() + 1);
-                } else {
-                    newProductItem = true;
                 }
-//                }
             }
         }
-        if (newProductItem) {
-            products.add(updateProductItemAmount);
-        }
-
+        products.add(updateProductItemAmount);
         return "cart";
     }
 
@@ -92,11 +77,11 @@ public class CartBean {
         return null;
     }
 
-    public List<ProductItemModel> getProducts() {
+    public Set<ProductItemModel> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductItemModel> products) {
+    public void setProducts(Set<ProductItemModel> products) {
         this.products = products;
     }
 
