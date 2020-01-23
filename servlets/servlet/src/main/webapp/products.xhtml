@@ -18,28 +18,32 @@
             <h:link outcome="shop" value="Powrót do listy produktów"/>
         </div>
         <h:form>
-            <h:dataTable value="#{productBean.products()}" var="productModel" border="1" cellspacing="0" cellpadding="0">
+            <h:dataTable value="#{productBean.products()}" var="productItem" border="1" cellspacing="0" cellpadding="0">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    <h:outputLabel value="#{productItem.id}"/>
+                </h:column>
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    #{productModel.name}
+                    #{productItem.name}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Price</f:facet>
-                    #{productModel.price}
+                    #{productItem.price}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Stock</f:facet>
-                    #{productModel.stock}
+                    #{productItem.stock}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Category</f:facet>
-                    #{productModel.category}
+                    #{productItem.category}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
-                    <h:commandLink action="#{productBean.delete(productModel.id)}" value="Usuń"/>
+                    <h:commandLink action="#{productBean.delete(productItem.id)}" value="Usuń"/>
                     &nbsp;
-                    <h:commandLink action="#{productBean.editProductView(productModel.id)}" value="Edycja"/>
+                    <h:commandLink action="#{productBean.editProductView(productItem.id)}" value="Edycja"/>
                 </h:column>
             </h:dataTable>
 <!--            <h:link outcome="addProduct" value="Dodaj"/>-->

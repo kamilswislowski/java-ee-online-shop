@@ -5,7 +5,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
@@ -17,34 +16,35 @@
         <h:link outcome="shop" value="Powrót do listy produktów"/>
 
         <h:form>
-            <h:dataTable value="#{cartBean.productModels}" var="productModel" border="1" cellspacing="0" cellpadding="0">
+            <h:dataTable value="#{cartBean.products}" var="productItem" border="1" cellspacing="0"
+                         cellpadding="0">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    <h:outputLabel value="#{productItem.product.id}"/>
+                </h:column>
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    #{productModel.name}
+                    <h:outputLabel value="#{productItem.product.name}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Price</f:facet>
-                    #{productModel.price}
+                    <h:outputLabel value="#{productItem.product.price}"/>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Stock</f:facet>
-                    #{productModel.stock}
+                    <f:facet name="header">Amount</f:facet>
+                    <h:outputLabel value="#{productItem.amount}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Category</f:facet>
-                    #{productModel.category}
+                    <h:outputLabel value="#{productItem.product.category}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Action</f:facet>
-                    <h:commandLink action="#{cartBean.delete(productModel)}" value="Usuń"/>
-                    &nbsp;
-<!--                    <h:commandLink action="#{productBean.editProductView(productModel.id)}" value="Edycja"/>-->
+                    <h:commandLink action="#{cartBean.delete(productItem)}" value="Usuń"/>
                 </h:column>
             </h:dataTable>
-<!--            <h:link outcome="addProduct" value="Dodaj"/>-->
-<!--            <h:commandLink action="#{productBean.addProductView()}" value="Dodaj"/>-->
+            <h:commandLink action="#{cartBean.checkout()}" value="Checkout"/>
         </h:form>
-
     </f:view>
 </h:body>
 
